@@ -22,7 +22,7 @@ import { User } from './user.entity';
  JwtModule.register({
 
   secret:'secret',
-   signOptions:{expiresIn:'60s'}
+   signOptions:{expiresIn:'6000s'}
 
  }),
  EmployeeModule],
