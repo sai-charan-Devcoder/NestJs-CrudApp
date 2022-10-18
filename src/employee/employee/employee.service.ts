@@ -15,6 +15,9 @@ export class EmployeeService {
     async  findAll(): Promise<Employee[]> {
         return await this.employeeRepository.find();
     }
+    async  findOne(id): Promise<Employee> {
+        return await this.employeeRepository.findOneBy({id});
+    }
 
     async  create(Employee: Employee): Promise<Employee> {
         return await this.employeeRepository.save(Employee);

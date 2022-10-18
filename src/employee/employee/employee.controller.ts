@@ -40,10 +40,45 @@ export class EmployeeController {
        
         throw new UnauthorizedException;
       }
+     
 
+
+      
         
        
       }
+      @Get(':id/getEmployee')
+    async getEmployeebyId(@Param('id') id,@Req() request:Request): Promise<Employee> {
+      
+      // const ele=this.appService.checkUser(request);
+        
+
+      try {
+        const cookie = request.cookies['jwt'];
+  
+        const data = await this.jwtService.verifyAsync(cookie);
+  
+        if (!data) {
+          throw new UnauthorizedException;
+        }
+  
+        const user = await this.appService.findOne({ id: data['id'] });
+  
+  
+        // const { password, ...result } = user;
+  
+        return this.employeeService.findOne(id);
+  
+      }
+      catch (e) {
+       
+        throw new UnauthorizedException;
+        
+      }
+    }
+
+
+
   //creating a new Employee
       @Post('create')
     async create(@Body() employeeData: Employee): Promise<any> {
@@ -70,7 +105,7 @@ export class EmployeeController {
         // const { password, ...result } = user;
   
         
-        employeeData.id = Number(id);
+        employeeData.id = id;
         console.log('Update #' + employeeData.id)
         return this.employeeService.update(employeeData);
   
